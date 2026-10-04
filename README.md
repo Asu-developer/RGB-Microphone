@@ -50,9 +50,6 @@ Arduino tarafında mikrofondan gelen analog sinyal okunabilir ve ses seviyesine 
 | **RGB LED - Kırmızı** | `D9`          | PWM ile kırmızı kontrolü |
 | **RGB LED - Yeşil**   | `D10`         | PWM ile yeşil kontrolü   |
 | **RGB LED - Mavi**    | `D11`         | PWM ile mavi kontrolü    |
-| **Mikrofon sinyali**  | `A0`          | Analog ses sinyali       |
-| **Mikrofon GND**      | `GND`         | Toprak                   |
-| **Buton**             | Dijital giriş | Devre/mod kontrolü       |
 
 ### ⚠️ RGB LED Dirençleri
 
@@ -149,36 +146,6 @@ void renkYaz(int kirmizi, int yesil, int mavi) {
   }
 }
 ```
-
----
-
-## 🎙️ 4. Mikrofon Sinyalini Arduino'da Okuma
-
-Mikrofon sinyalini Arduino'nun analog girişinden okumak için `A0` kullanılabilir.
-
-Basit bir analog okuma örneği:
-
-```cpp
-#define MIKROFON A0
-
-void setup() {
-
-  Serial.begin(9600);
-}
-
-void loop() {
-
-  int sesDegeri = analogRead(MIKROFON);
-
-  Serial.println(sesDegeri);
-
-  delay(10);
-}
-```
-
-Arduino IDE içerisindeki **Serial Monitor** açılarak mikrofondan gelen analog değerin değişimi gözlemlenebilir.
-
-> ⚠️ Elektret mikrofonu doğrudan Arduino'nun `A0` pinine bağlamak her durumda doğru sonuç vermeyebilir. Mikrofonun türüne göre bias direnci, kondansatör ve gerekirse yükselteç devresi gerekebilir.
 
 ---
 

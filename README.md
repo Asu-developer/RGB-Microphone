@@ -27,7 +27,7 @@ Standart kayıt cihazlarının içinde elektret (electret) mikrofonların çalı
 Projenin Arduino tarafında, mikrofondan gelen analog sinyal okunur ve bu sinyalin şiddetine (ses seviyesine) göre RGB LED'in renkleri dinamik olarak değiştirilir. Araya eklenen buton ise devreyi açıp kapatmak veya mod değiştirmek amacıyla konumlandırılmıştır.
 
 <p align="center">
-  <img src="image_x_aw2c.png" alt="Arduino Devre Şeması" width="650">
+  <img src="image_x_aw2c.png" alt="Jackplug-wiring.svg" width="650">
 </p>
 
 ### Bağlantı Tablosu

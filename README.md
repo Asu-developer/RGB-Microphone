@@ -148,65 +148,18 @@ void renkYaz(int kirmizi, int yesil, int mavi) {
 ```
 
 ---
+## 6 bacaklı button
+
+<p align="center">
+  <img src="./images.jpg" width="650" alt="Arduino RGB LED ve mikrofon devresi">
+</p>
 
 ## 🚀 5. Projeyi Çalıştırma
 
-### 1️⃣ Görselleri ekleyin
-
-README.md ile **aynı klasöre** şu iki dosyayı koyun:
-
-```text
-README.md
-microphone-jack-wiring.png
-arduino-rgb-circuit.png
-```
-
-GitHub repository yapısı şu şekilde olmalıdır:
-
-```text
-📁 Repository
-│
-├── README.md
-├── microphone-jack-wiring.png
-└── arduino-rgb-circuit.png
-```
-
-### 2️⃣ Arduino devresini kurun
-
-RGB LED'i Arduino'ya bağlayın ve her renk kanalı için uygun akım sınırlama direnci kullanın.
-
-### 3️⃣ Mikrofonu bağlayın
-
-Mikrofonun sinyal hattını uygun bias/besleme devresi üzerinden Arduino'nun `A0` analog girişine bağlayın.
-
-### 4️⃣ Kodu Arduino'ya yükleyin
-
-Arduino IDE üzerinden kodu derleyip Arduino kartınıza yükleyin.
-
-### 5️⃣ Test edin
-
-RGB LED'in renk geçişlerini gözlemleyin.
-
-Mikrofon sinyalini test etmek için Serial Monitor üzerinden `A0` değerlerini de inceleyebilirsiniz.
-
----
-
-## 📌 Proje Yapısı
-
-```text
-Arduino-Ses-RGB/
-│
-├── README.md
-├── microphone-jack-wiring.png
-├── arduino-rgb-circuit.png
-└── Arduino-Ses-RGB.ino
-```
-
----
+Devreyi hazırladıktan sonra kodu ardinuo'ya yüklemek yeterlidir
 
 ## ⚠️ Güvenlik ve Bağlantı Notları
 
-* Mikrofonu Arduino'ya doğrudan bağlamadan önce mikrofonun tipini kontrol edin.
 * Elektret mikrofonlar genellikle bias/besleme gerektirir.
 * RGB LED kanallarında akım sınırlama direnci kullanın.
 * Arduino analog girişine **5V'dan yüksek bir sinyal uygulamayın**.

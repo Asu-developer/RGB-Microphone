@@ -1,6 +1,6 @@
 # 🎙️ Kulaklık Mikrofonu (Jack) ve RGB LED ile Ses Duyarlı Arduino Projesi
 
-Bu proje, standart bir kulaklık mikrofonunu **3.5mm TRS/TRRS Jack** kullanarak Arduino'ya bağlamayı ve mikrofondan alınan ses sinyaline göre bir **RGB LED** kontrol etmeyi amaçlamaktadır.
+Bu proje, standart bir kulaklık mikrofonunu **3.5mm TRS/TRRS Jack** kullanarak **RGB LED** içeren bir mikrofon yapmayı amaçlamaktadır.
 
 Proje iki temel aşamadan oluşmaktadır:
 

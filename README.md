@@ -6,9 +6,13 @@ Proje iki temel aşamadan oluşur: **Mikrofon & Jack Kablolama Esasları** ve **
 
 ---
 
-## 🛠️ 1. Mikrofon Kablolama ve Jack Yapısı (`image_1LHXw9.png`)
+## 🛠️ 1. Mikrofon Kablolama ve Jack Yapısı
 
 Standart kayıt cihazlarının içinde elektret (electret) mikrofonların çalışabilmesi için **"Plug-in Power"** adı verilen düşük bir DC voltaj beslemesi gerekir. Hazırladığımız şemada bu yapı şu şekilde çalışmaktadır:
+
+<p align="center">
+  <img src="image_1LHXw9.png" alt="Mikrofon Jack Bağlantı Şeması" width="500">
+</p>
 
 *   **Kayıt Cihazı İçi (Inside the recording device):** Sağ (Right) ve Sol (Left) ses sinyalleri, DC akımı engellemek ve sadece AC ses sinyalini geçirmek için birer **kondansatör (kapasitör)** üzerinden ses işlemcisine aktarılır. Aynı hatlar üzerinden mikrofonun çalışması için gereken güç (Power) birer direnç vasıtasıyla sağlanır.
 *   **Mikrofon Tarafı (The microphone wiring):** 3.5mm Stereo (TRS) Jack ucunda:
@@ -18,9 +22,13 @@ Standart kayıt cihazlarının içinde elektret (electret) mikrofonların çalı
 
 ---
 
-## 🔌 2. Arduino Devre Şeması ve Bağlantıları (`image_x_aw2c.png`)
+## 🔌 2. Arduino Devre Şeması ve Bağlantıları
 
 Projenin Arduino tarafında, mikrofondan gelen analog sinyal okunur ve bu sinyalin şiddetine (ses seviyesine) göre RGB LED'in renkleri dinamik olarak değiştirilir. Araya eklenen buton ise devreyi açıp kapatmak veya mod değiştirmek amacıyla konumlandırılmıştır.
+
+<p align="center">
+  <img src="image_x_aw2c.png" alt="Arduino Devre Şeması" width="650">
+</p>
 
 ### Bağlantı Tablosu
 
@@ -95,13 +103,14 @@ void renkYaz(int kirmizi, int yesil, int mavi) {
   }
 }
 
+
 ```
 
 ---
 
 ## 🚀 Nasıl Çalıştırılır?
 
-1.  **Jack Bağlantısını Yapın:** Kulaklık mikrofonunuzu şemada (`image_1LHXw9.png`) gösterilen kutuplara uygun şekilde 3.5mm jack yuvasına lehimleyin veya bağlayın.
-2.  **Arduino Devresini Kurun:** Komponentleri ikinci şemadaki (`image_x_aw2c.png`) gibi Breadboard üzerine yerleştirip jumper kablolarla Arduino'ya bağlayın.
+1.  **Jack Bağlantısını Yapın:** Kulaklık mikrofonunuzu şemada gösterilen kutuplara uygun şekilde 3.5mm jack yuvasına lehimleyin veya bağlayın.
+2.  **Arduino Devresini Kurun:** Komponentleri ikinci şemadaki gibi Breadboard üzerine yerleştirip jumper kablolarla Arduino'ya bağlayın.
 3.  **Kodu Yükleyin:** Kendi kodunuzu Arduino IDE ile kartınıza yükleyin.
 4.  **Test Edin:** Mikrofona doğru konuştuğunuzda veya üflediğinizde RGB LED'in sesin ritmine göre renk değiştirdiğini gözlemleyin.

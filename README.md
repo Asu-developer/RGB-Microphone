@@ -11,7 +11,7 @@ Proje iki temel aşamadan oluşur: **Mikrofon & Jack Kablolama Esasları** ve **
 Standart kayıt cihazlarının içinde elektret (electret) mikrofonların çalışabilmesi için **"Plug-in Power"** adı verilen düşük bir DC voltaj beslemesi gerekir. Hazırladığımız şemada bu yapı şu şekilde çalışmaktadır:
 
 <p align="center">
-  <img src="image_1LHXw9.png" alt="Mikrofon Jack Bağlantı Şeması" width="500">
+  <img src="{C12F5B34-7AEB-416E-9B6E-F821B81C4ED4}" width="500">
 </p>
 
 *   **Kayıt Cihazı İçi (Inside the recording device):** Sağ (Right) ve Sol (Left) ses sinyalleri, DC akımı engellemek ve sadece AC ses sinyalini geçirmek için birer **kondansatör (kapasitör)** üzerinden ses işlemcisine aktarılır. Aynı hatlar üzerinden mikrofonun çalışması için gereken güç (Power) birer direnç vasıtasıyla sağlanır.

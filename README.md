@@ -1,61 +1,88 @@
 # 🎙️ Kulaklık Mikrofonu (Jack) ve RGB LED ile Ses Duyarlı Arduino Projesi
 
-Bu proje, standart bir kulaklık mikrofonunu (3.5mm TRS/TRRS Jack kullanarak) Arduino'ya nasıl güvenli bir şekilde bağlayacağınızı ve mikrofondan alınan ses sinyallerine göre bir RGB LED'i nasıl kontrol edebileceğinizi adım adım açıklamaktadır. 
+Bu proje, standart bir kulaklık mikrofonunu **3.5mm TRS/TRRS Jack** kullanarak Arduino'ya bağlamayı ve mikrofondan alınan ses sinyaline göre bir **RGB LED** kontrol etmeyi amaçlamaktadır.
 
-Proje iki temel aşamadan oluşur: **Mikrofon & Jack Kablolama Esasları** ve **Arduino Devre Kurulumu**.
+Proje iki temel aşamadan oluşmaktadır:
+
+* 🎙️ Mikrofon ve Jack kablolama
+* 🔴🟢🔵 Arduino ile RGB LED kontrolü
 
 ---
 
 ## 🛠️ 1. Mikrofon Kablolama ve Jack Yapısı
 
-Standart kayıt cihazlarının içinde elektret (electret) mikrofonların çalışabilmesi için **"Plug-in Power"** adı verilen düşük bir DC voltaj beslemesi gerekir. Hazırladığımız şemada bu yapı şu şekilde çalışmaktadır:
+Standart elektret mikrofonların çalışabilmesi için düşük seviyeli bir DC besleme gerekir. Bu besleme genellikle **Plug-in Power** olarak adlandırılır.
+
+Mikrofon bağlantısında kullanılan 3.5mm Jack yapısı aşağıdaki gibidir:
 
 <p align="center">
-  <img src="{C12F5B34-7AEB-416E-9B6E-F821B81C4ED4}" width="500">
+  <img src="./Jackplug-wiring.svg" width="500" alt="3.5mm Jack ve elektret mikrofon bağlantısı">
 </p>
 
-*   **Kayıt Cihazı İçi (Inside the recording device):** Sağ (Right) ve Sol (Left) ses sinyalleri, DC akımı engellemek ve sadece AC ses sinyalini geçirmek için birer **kondansatör (kapasitör)** üzerinden ses işlemcisine aktarılır. Aynı hatlar üzerinden mikrofonun çalışması için gereken güç (Power) birer direnç vasıtasıyla sağlanır.
-*   **Mikrofon Tarafı (The microphone wiring):** 3.5mm Stereo (TRS) Jack ucunda:
-    *   **Uç kısım (Tip):** Sol Mikrofonun (Left) pozitif (`+`) kutbuna bağlanır.
-    *   **Orta bilezik (Ring):** Sağ Mikrofonun (Right) pozitif (`+`) kutbuna bağlanır.
-    *   **Gövde (Sleeve):** Her iki mikrofonun da negatif (`-`) yani şase/GND kutbuna bağlanır.
+### 🎧 3.5mm TRS Jack Pinleri
+
+| Jack Bölümü | Görevi                       |
+| :---------- | :--------------------------- |
+| **Tip**     | Sol kanal / Mikrofon sinyali |
+| **Ring**    | Sağ kanal / Mikrofon sinyali |
+| **Sleeve**  | GND / Şase                   |
+
+Elektret mikrofon kullanırken mikrofonun negatif terminali **GND**, pozitif terminali ise uygun bias/besleme devresi üzerinden sinyal hattına bağlanmalıdır.
+
+> ⚠️ **Not:** TRS ve TRRS Jack bağlantıları aynı değildir. Özellikle telefon kulaklıklarında kullanılan TRRS jaklarda CTIA ve OMTP pin dizilimleri farklı olabilir.
 
 ---
 
-## 🔌 2. Arduino Devre Şeması ve Bağlantıları
+## 🔌 2. Arduino Devre Şeması
 
-Projenin Arduino tarafında, mikrofondan gelen analog sinyal okunur ve bu sinyalin şiddetine (ses seviyesine) göre RGB LED'in renkleri dinamik olarak değiştirilir. Araya eklenen buton ise devreyi açıp kapatmak veya mod değiştirmek amacıyla konumlandırılmıştır.
+Arduino tarafında mikrofondan gelen analog sinyal okunabilir ve ses seviyesine göre RGB LED'in rengi veya parlaklığı değiştirilebilir.
+
+Örnek devre:
 
 <p align="center">
-  <img src="image_x_aw2c.png" alt="Jackplug-wiring.svg" width="650">
+  <img src="./{C12F5B34-7AEB-416E-9B6E-F821B81C4ED4}.png" width="650" alt="Arduino RGB LED ve mikrofon devresi">
 </p>
 
-### Bağlantı Tablosu
+### 🔧 Bağlantı Tablosu
 
-| Komponent Pin / Kablo | Arduino Pini | Açıklama |
-| :--- | :--- | :--- |
-| **RGB LED - Kırmızı (Red)** | `D9` (PWM) | Kırmızı renk kontrolü |
-| **RGB LED - Yeşil (Green)** | `D10` (PWM) | Yeşil renk kontrolü |
-| **RGB LED - Mavi (Blue)** | `D11` (PWM) | Mavi renk kontrolü |
-| **Buton (Giriş Ayağı)** | `5V` | Güç hattından besleme alır |
-| **Buton (Çıkış Ayağı)** | Mikrofon `+` Hattı | Mikrofonu aktif etmek için tetikleyici |
-| **Mikrofon Jackı (GND)** | `GND` | Arduino toprak hattına bağlanır |
+| Komponent             | Arduino Pini  | Açıklama                 |
+| :-------------------- | :------------ | :----------------------- |
+| **RGB LED - Kırmızı** | `D9`          | PWM ile kırmızı kontrolü |
+| **RGB LED - Yeşil**   | `D10`         | PWM ile yeşil kontrolü   |
+| **RGB LED - Mavi**    | `D11`         | PWM ile mavi kontrolü    |
+| **Mikrofon sinyali**  | `A0`          | Analog ses sinyali       |
+| **Mikrofon GND**      | `GND`         | Toprak                   |
+| **Buton**             | Dijital giriş | Devre/mod kontrolü       |
 
-*Not: Görseldeki buton yapısına göre mikrofonun sinyal/güç hattı kontrollü olarak Arduino devresine entegre edilmiştir. Mikrofondan gelen ham analog veriyi okumak için jack çıkışından Arduino'nun `A0` gibi bir Analog giriş pinine bağlantı yapılması önerilir.*
+### ⚠️ RGB LED Dirençleri
+
+RGB LED'in her renk kanalı için ayrı bir akım sınırlama direnci kullanılması önerilir.
+
+Örneğin:
+
+```text
+D9  ── 220Ω ── Kırmızı
+D10 ── 220Ω ── Yeşil
+D11 ── 220Ω ── Mavi
+```
+
+RGB LED'in ortak bacağının **Common Anode** veya **Common Cathode** olmasına göre bağlantı ve PWM mantığı değişir.
 
 ---
 
-## 💻 3. Proje Kodu
+## 💻 3. Arduino Kodu
 
-Projede kullanılan güncel Arduino kaynak koduna aşağıdan ulaşabilirsiniz:
+Aşağıdaki kod RGB LED üzerinde sürekli ve yumuşak bir renk geçişi oluşturur.
 
 ```cpp
-// Sabitlenen Fiziksel Bağlantı Tanımlamaları (#define)
-#define LED_MAVI    11  // 1. Bacak -> D11
-#define LED_YESIL   10  // 2. Bacak -> D10
-#define LED_KIRMIZI  9  // 4. Bacak -> D9
+// Sabitlenen fiziksel bağlantı tanımlamaları
+#define LED_MAVI    11  // D11
+#define LED_YESIL   10  // D10
+#define LED_KIRMIZI 9   // D9
 
-const bool ORTAK_ANOT = true; 
+// RGB LED ortak anot ise true,
+// ortak katot ise false yapın.
+const bool ORTAK_ANOT = true;
 
 void setup() {
   pinMode(LED_KIRMIZI, OUTPUT);
@@ -64,53 +91,163 @@ void setup() {
 }
 
 void loop() {
-  // Renk çarkını 0 ile 768 derece/adım arasında kesintisiz döndürüyoruz
-  // Bu sayede hiçbir döngü bitişinde sekme veya atlama yaşanmaz.
+
+  // Renk çarkını 0-764 arasında döndürüyoruz.
+  // Böylece kırmızı -> yeşil -> mavi -> kırmızı
+  // arasında yumuşak geçiş elde edilir.
+
   for (int derece = 0; derece < 765; derece++) {
+
     int r, g, b;
 
     if (derece < 255) {
-      // 1. Kısım: Kırmızıdan Yeşile geçiş
+
+      // Kırmızıdan yeşile geçiş
       r = 255 - derece;
       g = derece;
       b = 0;
-    } else if (derece < 510) {
-      // 2. Kısım: Yeşilden Maviye geçiş
+
+    }
+    else if (derece < 510) {
+
+      // Yeşilden maviye geçiş
       r = 0;
       g = 255 - (derece - 255);
       b = derece - 255;
-    } else {
-      // 3. Kısım: Maviden Kırmızıya geçiş (Pembedeki sekme burada tamamen pürüzsüzleşti)
+
+    }
+    else {
+
+      // Maviden kırmızıya geçiş
       r = derece - 510;
       g = 0;
       b = 255 - (derece - 510);
     }
 
     renkYaz(r, g, b);
-    delay(3); // Geçiş hızı (Daha da hızlandırmak için 1 veya 2 yapabilirsiniz)
+
+    delay(3);
   }
 }
 
 void renkYaz(int kirmizi, int yesil, int mavi) {
+
   if (ORTAK_ANOT) {
+
+    // Common Anode RGB LED
     analogWrite(LED_KIRMIZI, 255 - kirmizi);
     analogWrite(LED_YESIL, 255 - yesil);
     analogWrite(LED_MAVI, 255 - mavi);
-  } else {
+
+  }
+  else {
+
+    // Common Cathode RGB LED
     analogWrite(LED_KIRMIZI, kirmizi);
     analogWrite(LED_YESIL, yesil);
     analogWrite(LED_MAVI, mavi);
   }
 }
-
-
 ```
 
 ---
 
-## 🚀 Nasıl Çalıştırılır?
+## 🎙️ 4. Mikrofon Sinyalini Arduino'da Okuma
 
-1.  **Jack Bağlantısını Yapın:** Kulaklık mikrofonunuzu şemada gösterilen kutuplara uygun şekilde 3.5mm jack yuvasına lehimleyin veya bağlayın.
-2.  **Arduino Devresini Kurun:** Komponentleri ikinci şemadaki gibi Breadboard üzerine yerleştirip jumper kablolarla Arduino'ya bağlayın.
-3.  **Kodu Yükleyin:** Kendi kodunuzu Arduino IDE ile kartınıza yükleyin.
-4.  **Test Edin:** Mikrofona doğru konuştuğunuzda veya üflediğinizde RGB LED'in sesin ritmine göre renk değiştirdiğini gözlemleyin.
+Mikrofon sinyalini Arduino'nun analog girişinden okumak için `A0` kullanılabilir.
+
+Basit bir analog okuma örneği:
+
+```cpp
+#define MIKROFON A0
+
+void setup() {
+
+  Serial.begin(9600);
+}
+
+void loop() {
+
+  int sesDegeri = analogRead(MIKROFON);
+
+  Serial.println(sesDegeri);
+
+  delay(10);
+}
+```
+
+Arduino IDE içerisindeki **Serial Monitor** açılarak mikrofondan gelen analog değerin değişimi gözlemlenebilir.
+
+> ⚠️ Elektret mikrofonu doğrudan Arduino'nun `A0` pinine bağlamak her durumda doğru sonuç vermeyebilir. Mikrofonun türüne göre bias direnci, kondansatör ve gerekirse yükselteç devresi gerekebilir.
+
+---
+
+## 🚀 5. Projeyi Çalıştırma
+
+### 1️⃣ Görselleri ekleyin
+
+README.md ile **aynı klasöre** şu iki dosyayı koyun:
+
+```text
+README.md
+microphone-jack-wiring.png
+arduino-rgb-circuit.png
+```
+
+GitHub repository yapısı şu şekilde olmalıdır:
+
+```text
+📁 Repository
+│
+├── README.md
+├── microphone-jack-wiring.png
+└── arduino-rgb-circuit.png
+```
+
+### 2️⃣ Arduino devresini kurun
+
+RGB LED'i Arduino'ya bağlayın ve her renk kanalı için uygun akım sınırlama direnci kullanın.
+
+### 3️⃣ Mikrofonu bağlayın
+
+Mikrofonun sinyal hattını uygun bias/besleme devresi üzerinden Arduino'nun `A0` analog girişine bağlayın.
+
+### 4️⃣ Kodu Arduino'ya yükleyin
+
+Arduino IDE üzerinden kodu derleyip Arduino kartınıza yükleyin.
+
+### 5️⃣ Test edin
+
+RGB LED'in renk geçişlerini gözlemleyin.
+
+Mikrofon sinyalini test etmek için Serial Monitor üzerinden `A0` değerlerini de inceleyebilirsiniz.
+
+---
+
+## 📌 Proje Yapısı
+
+```text
+Arduino-Ses-RGB/
+│
+├── README.md
+├── microphone-jack-wiring.png
+├── arduino-rgb-circuit.png
+└── Arduino-Ses-RGB.ino
+```
+
+---
+
+## ⚠️ Güvenlik ve Bağlantı Notları
+
+* Mikrofonu Arduino'ya doğrudan bağlamadan önce mikrofonun tipini kontrol edin.
+* Elektret mikrofonlar genellikle bias/besleme gerektirir.
+* RGB LED kanallarında akım sınırlama direnci kullanın.
+* Arduino analog girişine **5V'dan yüksek bir sinyal uygulamayın**.
+* TRRS kulaklık jaklarında pin dizilimini kontrol etmeden bağlantı yapmayın.
+* Bilgisayar veya telefon mikrofon girişleri ile Arduino analog girişlerinin elektriksel yapıları aynı değildir.
+
+---
+
+## 📜 Lisans
+
+Bu proje açık kaynaklıdır ve geliştirilmeye açıktır.
